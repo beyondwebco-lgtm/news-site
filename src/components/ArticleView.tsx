@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { PortableText } from "next-sanity";
 import { Article } from "@/types/article";
 import CategoryBadge from "./CategoryBadge";
 
@@ -94,23 +95,31 @@ export default function ArticleView({
 
         {/* Article Body Content */}
         <div className="font-sans text-neutral-800 space-y-6 pt-4 text-base sm:text-lg leading-relaxed">
-          {article.paragraphs.map((paragraph, index) => {
-            // After second paragraph, insert featured quote if present
-            if (index === 2 && article.featuredQuote) {
-              return (
-                <React.Fragment key={index}>
-                  <blockquote className="my-8 border-l-4 border-red-700 pl-6 py-2 italic font-serif text-lg sm:text-xl text-neutral-900 bg-neutral-50 rounded-r-sm">
-                    &ldquo;{article.featuredQuote.quote}&rdquo;
-                    <footer className="mt-2 text-xs font-sans not-italic font-semibold tracking-wide uppercase text-neutral-600">
-                      &mdash; {article.featuredQuote.attribution}
-                    </footer>
-                  </blockquote>
-                  <p>{paragraph}</p>
-                </React.Fragment>
-              );
-            }
-            return <p key={index}>{paragraph}</p>;
-          })}
+          {article.body && Array.isArray(article.body) && article.body.length > 0 ? (
+            <div className="space-y-6">
+              <PortableText value={article.body} />
+            </div>
+          ) : article.paragraphs && article.paragraphs.length > 0 ? (
+            article.paragraphs.map((paragraph, index) => {
+              // After second paragraph, insert featured quote if present
+              if (index === 2 && article.featuredQuote) {
+                return (
+                  <React.Fragment key={index}>
+                    <blockquote className="my-8 border-l-4 border-red-700 pl-6 py-2 italic font-serif text-lg sm:text-xl text-neutral-900 bg-neutral-50 rounded-r-sm">
+                      &ldquo;{article.featuredQuote.quote}&rdquo;
+                      <footer className="mt-2 text-xs font-sans not-italic font-semibold tracking-wide uppercase text-neutral-600">
+                        &mdash; {article.featuredQuote.attribution}
+                      </footer>
+                    </blockquote>
+                    <p>{paragraph}</p>
+                  </React.Fragment>
+                );
+              }
+              return <p key={index}>{paragraph}</p>;
+            })
+          ) : (
+            <p className="text-neutral-600 italic">No article content available.</p>
+          )}
         </div>
 
         {/* Bottom Back Button & Article Signoff */}

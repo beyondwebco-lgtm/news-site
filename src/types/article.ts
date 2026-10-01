@@ -1,5 +1,6 @@
 export interface Article {
-  id: number;
+  id?: number | string;
+  _id?: string;
   slug: string;
   title: string;
   category: string;
@@ -14,7 +15,9 @@ export interface Article {
   imageUrl: string;
   imageAlt: string;
   imageCaption: string;
-  paragraphs: string[];
+  paragraphs?: string[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  body?: any;
   featuredQuote?: {
     quote: string;
     attribution: string;

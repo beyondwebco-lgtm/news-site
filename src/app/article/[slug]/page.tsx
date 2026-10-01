@@ -1,9 +1,11 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ARTICLES, getArticleBySlug } from "@/data/articles";
+import { fetchArticleBySlug, fetchAllArticles } from "@/sanity/fetch";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ArticleView from "@/components/ArticleView";
+
+export const dynamic = "force-dynamic";
 
 interface ArticlePageProps {
   params: Promise<{
@@ -11,17 +13,11 @@ interface ArticlePageProps {
   }>;
 }
 
-export async function generateStaticParams() {
-  return ARTICLES.map((article) => ({
-    slug: article.slug,
-  }));
-}
-
 export async function generateMetadata({
   params,
 }: ArticlePageProps): Promise<Metadata> {
   const { slug } = await params;
-  const article = getArticleBySlug(slug);
+  const article = await fetchArticleBySlug(slug);
 
   if (!article) {
     return {
@@ -43,14 +39,16 @@ export async function generateMetadata({
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
   const { slug } = await params;
-  const article = getArticleBySlug(slug);
+  const article = await fetchArticleBySlug(slug);
 
   if (!article) {
     notFound();
   }
 
-  // Pick other articles from the 10 posts for "More Stories"
-  const relatedArticles = ARTICLES.filter((a) => a.id !== article.id).slice(0, 2);
+  const allArticles = await fetchAllArticles();
+  const relatedArticles = allArticles
+    .filter((a) => a.slug !== article.slug)
+    .slice(0, 2);
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
