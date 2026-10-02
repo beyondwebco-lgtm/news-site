@@ -29,13 +29,14 @@ export const articleType = defineType({
       type: "string",
       options: {
         list: [
-          { title: "Technology", value: "Technology" },
+          { title: "Money", value: "Money" },
           { title: "Business", value: "Business" },
+          { title: "Sports", value: "Sports" },
+          { title: "Health", value: "Health" },
+          { title: "Technology", value: "Technology" },
           { title: "India", value: "India" },
           { title: "World", value: "World" },
           { title: "Science", value: "Science" },
-          { title: "Health", value: "Health" },
-          { title: "Sports", value: "Sports" },
           { title: "Environment", value: "Environment" },
           { title: "Education", value: "Education" },
           { title: "Entertainment", value: "Entertainment" },

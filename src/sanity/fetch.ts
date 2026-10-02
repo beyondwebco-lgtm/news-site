@@ -1,6 +1,7 @@
 import { client } from "./client";
 import { ARTICLES_QUERY, ARTICLE_BY_SLUG_QUERY, ARTICLE_SLUGS_QUERY } from "./queries";
 import { ARTICLES, getArticleBySlug as getStaticArticleBySlug } from "@/data/articles";
+import { NEW_CMS_ARTICLES } from "@/data/cmsArticles";
 import { Article } from "@/types/article";
 import { urlFor } from "./image";
 
@@ -57,7 +58,12 @@ function mapSanityDocToArticle(doc: any): Article {
 }
 
 /**
- * Fetches articles exclusively from Sanity CMS with fallback to static data if empty or on error.
+ * Combined list of all CMS archive articles (New Money, Sports & Health + Initial Set)
+ */
+export const ALL_ARCHIVE_ARTICLES: Article[] = [...NEW_CMS_ARTICLES, ...ARTICLES];
+
+/**
+ * Fetches articles exclusively from Sanity CMS with fallback to all archive articles.
  */
 export async function fetchSanityArticles(): Promise<Article[]> {
   try {
@@ -67,12 +73,15 @@ export async function fetchSanityArticles(): Promise<Article[]> {
       { cache: "no-store" }
     );
     if (Array.isArray(sanityArticles) && sanityArticles.length > 0) {
-      return sanityArticles.map(mapSanityDocToArticle);
+      // Prepend Sanity articles so latest studio edits appear first
+      const sanitySlugs = new Set(sanityArticles.map((s: any) => s.slug));
+      const nonOverlapping = NEW_CMS_ARTICLES.filter((a) => !sanitySlugs.has(a.slug));
+      return [...sanityArticles.map(mapSanityDocToArticle), ...nonOverlapping];
     }
   } catch (error) {
-    console.warn("Failed to fetch articles from Sanity, falling back to static data:", error);
+    console.warn("Failed to fetch articles from Sanity, falling back to static archive data:", error);
   }
-  return ARTICLES;
+  return ALL_ARCHIVE_ARTICLES;
 }
 
 /**
@@ -102,6 +111,8 @@ export async function fetchArticleBySlug(slug: string): Promise<Article | undefi
   } catch (error) {
     console.warn(`Failed to fetch article ${slug} from Sanity, falling back to static data:`, error);
   }
+  const fromNew = NEW_CMS_ARTICLES.find((a) => a.slug === slug);
+  if (fromNew) return fromNew;
   return getStaticArticleBySlug(slug);
 }
 
@@ -115,5 +126,5 @@ export async function fetchAllSlugs(): Promise<string[]> {
   } catch {
     // Fall back to static slugs
   }
-  return ARTICLES.map((a) => a.slug);
+  return ALL_ARCHIVE_ARTICLES.map((a) => a.slug);
 }
