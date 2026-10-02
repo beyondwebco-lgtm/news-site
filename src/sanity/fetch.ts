@@ -56,7 +56,10 @@ function mapSanityDocToArticle(doc: any): Article {
   };
 }
 
-export async function fetchAllArticles(): Promise<Article[]> {
+/**
+ * Fetches articles exclusively from Sanity CMS with fallback to static data if empty or on error.
+ */
+export async function fetchSanityArticles(): Promise<Article[]> {
   try {
     const sanityArticles = await client.fetch(
       ARTICLES_QUERY,
@@ -69,6 +72,20 @@ export async function fetchAllArticles(): Promise<Article[]> {
   } catch (error) {
     console.warn("Failed to fetch articles from Sanity, falling back to static data:", error);
   }
+  return ARTICLES;
+}
+
+/**
+ * Default fetcher - returns all articles (from Sanity or static fallback)
+ */
+export async function fetchAllArticles(): Promise<Article[]> {
+  return fetchSanityArticles();
+}
+
+/**
+ * Returns static edition articles (the fixed curated homepage stories)
+ */
+export function getStaticHomepageArticles(): Article[] {
   return ARTICLES;
 }
 

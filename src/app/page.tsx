@@ -1,12 +1,10 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import NewsFeed from "@/components/NewsFeed";
-import { fetchAllArticles } from "@/sanity/fetch";
+import { getStaticHomepageArticles } from "@/sanity/fetch";
 
-export const dynamic = "force-dynamic";
-
-export default async function HomePage() {
-  const articles = await fetchAllArticles();
+export default function HomePage() {
+  const articles = getStaticHomepageArticles();
 
   return (
     <div className="min-h-screen flex flex-col bg-white">

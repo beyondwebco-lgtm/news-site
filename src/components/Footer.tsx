@@ -41,6 +41,14 @@ export default function Footer() {
               </li>
               <li>
                 <Link
+                  href="/archive"
+                  className="text-neutral-600 hover:text-neutral-900 transition-colors font-medium"
+                >
+                  News Archive
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/#latest"
                   className="text-neutral-600 hover:text-neutral-900 transition-colors"
                 >

@@ -47,6 +47,12 @@ export default function Header() {
                 Home
               </Link>
               <Link
+                href="/archive"
+                className="text-neutral-600 hover:text-red-700 transition-colors py-3 border-b-2 border-transparent hover:border-red-700 font-semibold"
+              >
+                Archive
+              </Link>
+              <Link
                 href="/#latest"
                 className="text-neutral-600 hover:text-red-700 transition-colors py-3 border-b-2 border-transparent hover:border-red-700"
               >
@@ -61,8 +67,13 @@ export default function Header() {
             </div>
 
             {/* Quick date / count badge */}
-            <div className="text-xs text-neutral-500 font-mono hidden sm:block">
-              10 Top Stories
+            <div className="flex items-center gap-4 text-xs font-mono hidden sm:flex">
+              <Link
+                href="/archive"
+                className="text-red-700 font-semibold uppercase tracking-wider text-[11px] hover:underline"
+              >
+                Browse Archive &rarr;
+              </Link>
             </div>
           </div>
         </div>
