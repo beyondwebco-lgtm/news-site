@@ -147,7 +147,7 @@ export const NEW_CMS_ARTICLES: Article[] = [
       role: "Tactical & Analytics Desk",
     },
     imageUrl:
-      "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1200&q=80",
     imageAlt: "Football stadium under floodlights before a championship match",
     imageCaption:
       "High-speed computer vision cameras calculate passing geometries and sprint velocities in real-time.",

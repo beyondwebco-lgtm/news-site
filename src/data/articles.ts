@@ -16,7 +16,7 @@ export const ARTICLES: Article[] = [
       role: "Technology Correspondent",
     },
     imageUrl:
-      "https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80",
     imageAlt: "Digital neural network interface illustrating artificial intelligence systems",
     imageCaption:
       "Modern machine learning algorithms are increasingly embedded in ambient software and everyday consumer devices.",
@@ -144,7 +144,7 @@ export const ARTICLES: Article[] = [
       role: "Science & Discovery Reporter",
     },
     imageUrl:
-      "https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=1200&q=80",
     imageAlt: "High-efficiency solar photovoltaic panels reflecting clear blue skies",
     imageCaption:
       "Next-generation tandem solar cells demonstrate laboratory conversion efficiencies exceeding thirty-four percent.",
